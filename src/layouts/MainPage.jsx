@@ -1,15 +1,15 @@
 import React from 'react'
-import MusicPlayBar from '../Components/MusicPlayBar'
-import SearchBar from '../Components/SearchBar'
-import PopularMusic from '../Components/PopularMusic'
-import PopMusic from '../Components/PopMusic'
-import RapMusic from '../Components/RapMusic'
-import BrunoMars from '../Components/BrunoMars'
-import Rihanna from '../Components/Rihanna'
+import MusicPlayBar from '../Components/Pages/MusicPlayBar'
+import SearchBar from '../Components/Pages/SearchBar'
+import PopularMusic from '../Components/Pages/PopularMusic'
+import PopMusic from '../Components/Pages/PopMusic'
+import RapMusic from '../Components/Pages/RapMusic'
+import BrunoMars from '../Components/Pages/BrunoMars'
+import Rihanna from '../Components/Pages/Rihanna'
 
 const MainPage = () => {
   return (
-    <div className='  bg-gray-500 h-screen'>
+    <div className='  bg-gradient-to-tl from-purple-300 to-indigo-400 h-screen'>
       <SearchBar />
       <PopularMusic />
       <PopMusic />
