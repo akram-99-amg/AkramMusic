@@ -9,7 +9,7 @@ import Rihanna from '../Components/Pages/Rihanna'
 
 const MainPage = () => {
   return (
-    <div className='  bg-gradient-to-tl from-purple-300 to-indigo-400 h-screen'>
+    <div className='relative bg-gradient-to-tl from-purple-300 to-indigo-400 min-h-screen'>
       <SearchBar />
       <PopularMusic />
       <PopMusic />

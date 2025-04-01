@@ -25,7 +25,7 @@ const SignUpForm = () => {
             <div className=' bg-inherit backdrop-blur-md flex flex-col justify-center h-3/4 w-3/4 shadow-2xl rounded-lg my-auto'>
                 <h1
                     className='font-bold text-5xl text-center font- text-white mb-5'>
-                    Sign Up
+                    Create an account
                 </h1>
                 <form
                     onSubmit={handleSubmit}
