@@ -1,23 +1,26 @@
-import React from 'react'
-import MusicPlayBar from '../Components/Pages/MusicPlayBar'
-import SearchBar from '../Components/Pages/SearchBar'
-import PopularMusic from '../Components/Pages/PopularMusic'
-import PopMusic from '../Components/Pages/PopMusic'
-import RapMusic from '../Components/Pages/RapMusic'
-import BrunoMars from '../Components/Pages/BrunoMars'
-import Rihanna from '../Components/Pages/Rihanna'
+import {Routes, Route} from "react-router-dom"
+import MusicPlayBar from '../Components/Forms/MusicPlayBar'
+import HomeSection from './HomeSection'
+import LeftBar from '../Components/Forms/LeftBar'
+import TrackCard from "../Components/Forms/TrackCard"
+
 
 const MainPage = () => {
   return (
-    <div className='relative bg-gradient-to-tl from-purple-300 to-indigo-400 min-h-screen'>
-      <SearchBar />
-      <PopularMusic />
-      <PopMusic />
-      <RapMusic />
-      <BrunoMars />
-      <Rihanna />
+    <div className=' bg-gradient-to-tl from-purple-300 to-indigo-400 min-h-screen pt-8 pb-16'>
+      <div className='flex flex-col sm:flex-row'>
+        <LeftBar />
 
-      <MusicPlayBar />
+
+        <div className='flex-1 mt-3 sm:pl-3' >
+        <Routes>
+        <Route path="/home" element={<HomeSection />} />
+        <Route path="/search" element={<TrackCard />} />
+        </Routes>
+
+          <MusicPlayBar />
+        </div>
+      </div>
     </div>
   )
 }
