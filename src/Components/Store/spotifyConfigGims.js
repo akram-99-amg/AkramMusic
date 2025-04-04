@@ -7,7 +7,7 @@ const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET
 
 const spotifyApi = new SpotifyWebApi({ CLIENT_ID, CLIENT_SECRET }) 
 
-const useSpotifyStoreRih = create((set) => ({
+const useSpotifyStoreGims = create((set) => ({
     token: null,
     tracks: [],
     isLoading: false,
@@ -38,13 +38,13 @@ const useSpotifyStoreRih = create((set) => ({
 
     },
     // fetching bruno mars songs
-    rihannaFetch: async () => {
+    GimsFetch: async () => {
         try {
             set({ isLoading: true });
-            const token = await useSpotifyStoreRih.getState().fetchToken()
+            const token = await useSpotifyStoreGims.getState().fetchToken()
             if (!token) throw new Error("no spotify token available");
 
-            const data = await spotifyApi.getArtistTopTracks("5pKCCKE2ajJHZ9KAiaK11H", "US")
+            const data = await spotifyApi.getArtistTopTracks("0GOx72r5AAEKRGQFn3xqXK", "US")
 
             set({ tracks: data.body.tracks, isLoading: false })
 
@@ -55,4 +55,4 @@ const useSpotifyStoreRih = create((set) => ({
 
 }))
 
-export default useSpotifyStoreRih
+export default useSpotifyStoreGims

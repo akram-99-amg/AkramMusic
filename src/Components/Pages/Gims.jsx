@@ -1,20 +1,20 @@
 import React, { useEffect } from "react"
-import useSpotifyStoreRih from '../Store/spotifyConfigRih'
+import useSpotifyStoreRih from '../Store/spotifyConfigGims'
 import { Waveform } from 'ldrs/react'
 import 'ldrs/react/Waveform.css'
 
 
-const Rihanna = () => {
-  const { tracks, isLoading, error, rihannaFetch } = useSpotifyStoreRih()
+const Gims = () => {
+  const { tracks, isLoading, error, GimsFetch } = useSpotifyStoreRih()
 
   useEffect(() => {
-    rihannaFetch()
-  }, [rihannaFetch])
+    GimsFetch()
+  }, [GimsFetch])
 
   return (
     <div className='bg-zinc-200 mt-4 mx-7 rounded-lg py-3 px-5 '>
       <div className="flex flex-col my-3">
-        <h2 className="text-2xl font-bold">Best Rihanna Songs !</h2>
+        <h2 className="text-2xl font-bold">Best Gims Songs !</h2>
         <div className="flex justify-center my-2">
           {isLoading && <Waveform
               
@@ -48,4 +48,4 @@ const Rihanna = () => {
   )
 }
 
-export default Rihanna
+export default Gims

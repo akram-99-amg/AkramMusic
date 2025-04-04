@@ -3,7 +3,7 @@ import PopularMusic from '../Components/Pages/PopularMusic'
 import PopMusic from '../Components/Pages/PopMusic'
 import RapMusic from '../Components/Pages/RapMusic'
 import BrunoMars from '../Components/Pages/BrunoMars'
-import Rihanna from '../Components/Pages/Rihanna'
+import Gims from '../Components/Pages/Gims'
 
 const HomeSection = () => {
   return (
@@ -12,7 +12,7 @@ const HomeSection = () => {
       <PopMusic />
       <RapMusic />
       <BrunoMars />
-      <Rihanna />
+      <Gims />
     </div>
   )
 }
