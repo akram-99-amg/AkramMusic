@@ -5,44 +5,15 @@ import { useMusic } from '../Store/Music'
 
 
 const TrackCard = () => {
-  
-  const {handleTrackPlay}= useMusic()
-  // const [artists, setArtists] = useState("")
-  // const [accessToken, setAccessToken] = useState("")
-  const [query, setQuery] =useState("")
+
+  const { handleTrackPlay } = useMusic()
+  const [query, setQuery] = useState("")
   const [tracks, setTracks] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  
-  // const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID
-  // const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET
 
-  // useEffect(() => {
-  //   // Spotify Token
-  //   const fetchToken = async () => {
-  //     try {
-  //       const authParameter = {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/x-www-form-urlencoded"
-  //         },
-  //         body: "grant_type=client_credentials&client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET
-  //       }
-  //       fetch("https://accounts.spotify.com/api/token", authParameter)
-  //         .then(res => res.json())
-  //         .then(data => setAccessToken(data.access_token))
-  //     } catch (err) {
-  //       setError("failed to get access token")
-  //     }
-
-  //   }
-
-  //   fetchToken()
-  // }, [])
-
-  
-//search for the artist
+  //search for the artist
   async function search(e) {
     e.preventDefault()
     setIsLoading(true)
@@ -54,58 +25,62 @@ const TrackCard = () => {
       "https://corsproxy.io/?",
       "https://thingproxy.freeboard.io/fetch/"
     ];
-    try{
-      const encodedUrl = encodeURIComponent(`https://api.deezer.com/search?q=${query}`);
-      const response = await fetch(`${proxyUrls[0]}${encodedUrl}`);
-      const data = await response.json();
-      const result = data.contents ? JSON.parse(data.contents) : data;
-      setTracks(result.data || []);
-      // const proxyUrl = "https://cors-anywhere.herokuapp.com/"
-      // const apiUrl = `https://api.deezer.com/search?q=${encodeURIComponent(query)}`
-      // const response = await fetch(`https://api.deezer.com/search/track?q=${query}`,{
-        // method:"GET",
-        // mode:"no-cors"})
+
+    const encodedDeezerUrl = encodeURIComponent(`https://api.deezer.com/search?q=${query}`);
+    let sucess = false
+    
+    for(let proxy of proxyUrls){
       
-      // const response =await fetch(proxyUrl+apiUrl)
-      // const data= await response.json()
-      // const data=await  response.json()
-      setTracks(data.data || [])
-      // const jsonString = text.match(/\((.*)\)/)?.[1] || "{}"
-      // const data =JSON.parse(jsonString)
-      // setTracks(data.data || [])
-    }catch(err){
-      setError("Error no song found")
-      setTracks([])
-    }finally{
-      setIsLoading(false)
+      try{
+        const response= await fetch (`${proxy}${encodedDeezerUrl}`);
+        
+
+        if (!response.ok) continue
+        const data= await response.json()
+        
+
+         let result;
+
+        if(data.contents){
+          if(!data.contents.trim().startsWith("{")){
+            console.warn("Invalid wrapped JSON in .contents");
+          continue;
+          }
+          result = JSON.parse(data.contents)
+          
+        
+        }else if(data.data){
+          result=data
+        }else{
+          console.warn("Unexpected data structure from proxy:", data);
+          continue;
+        }
+       
+
+        if (result.data && result.data.length >0){
+          
+          setTracks(result.data)
+        }else{
+          
+          setError("no songs found")
+          setTracks([])
+        }
+        sucess=true
+ break
+      }catch(err){
+        console.warn("Proxy failed:", proxy, err)
+        continue
+      }
+
     }
+    if (!sucess) {
+      setError("All proxy attempts failed. Please try again.");
+      setTracks([]);
+    }
+  
+    setIsLoading(false);
 
-    // try {
-    //   const searchParameter = {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${accessToken}`
-    //     }
-
-    //   }
-
-    //   //get the tracks
-    //   const returntracks = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(artists)}&type=track&limit=20`, searchParameter);
-    //   const tracksData = await returntracks.json()
-      
-    //   setTracks(tracksData.tracks.items)
-
-      
-
-
-    // } catch (err) {
-    //   setError(err.message || " Failed to fetch")
-    //   setTracks([])
-    // } finally {
-    //   setIsLoading(false)
-    // }
-
+   
   }
 
 
@@ -144,15 +119,21 @@ const TrackCard = () => {
       <div className='pb-5'>
         {tracks.map((track) => (
           <div key={track.id}
-            className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100" 
-              onClick={() =>handleTrackPlay({
-                
-                name:track.title,
-                preview_url:track.preview,
-                
+            className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100"
+            onClick={() => handleTrackPlay({
 
-              })}
-            >
+              title: track.title,
+              preview_url: track.preview,
+              album: {
+                cover_medium: track.album?.cover_medium || "",
+              },
+              artists: {
+                name: track.artist?.name || "",
+              }
+            
+
+            })}
+          >
             <img src={track.album.cover_medium}
               alt={track.title}
               className="w-16 h-16 rounded-full" />
@@ -163,11 +144,11 @@ const TrackCard = () => {
                 {track.artist.name}
               </h2>
             </div>
-            
+
           </div>
         ))}
       </div>
-      
+
     </div>
   )
 }

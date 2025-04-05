@@ -31,13 +31,13 @@ const MusicPlayBar = () => {
           {currentTrack && (
             <div className='flex items-center gap-4 py-4 sm:py-0 ' >
               <img
-                src={currentTrack.album.cover_medium}
-                alt={currentTrack.title}
+                src={currentTrack?.album?.cover_medium}
+                alt={currentTrack?.title}
                 className='w-12 sm:w-16 sm:h-16 rounded-md object-cover' />
               <div className='truncate'>
-                <h2 className='text-md sm:text-lg font-semibold'>{currentTrack.title}</h2>
+                <h2 className='text-md sm:text-lg font-semibold'>{currentTrack?.title}</h2>
                 <p className="text-gray-700 truncate">
-                  {currentTrack.artists.name}
+                  {currentTrack?.artists.name}
                 </p>
               </div>
 
@@ -105,13 +105,7 @@ const MusicPlayBar = () => {
 
 
           </div>
-          {currentTrack && (
-            <audio 
-            ref={audioRef}
-            src={currentTrack.preview_url}
-            preload='auto'
-            />
-          )}
+          
         </div>
 
 

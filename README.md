@@ -1,5 +1,5 @@
 🚀 Project Overview 🚀
-This project is a music web application built with React js. the app allows users to search for music tracks, view track information, and play music using the spotify API.
+This project is a music web application built with React js. the app allows users to search for music tracks, view track information, and play music using the Deezer API.
 
 📝 Features 📝 
 
@@ -21,13 +21,19 @@ Styling : Tailwind CSS
 
 📚 Libraries Used 📚
 
+state management : Zustand
+
 Data Fetching: React-query
 
 Routing : React-Router-Dom
 
 📨 API used 📨
 
-API : Spotify API
+API : Spotify API and Deezer API
+
+🪪 Client authentication 🪪  
+
+I'm using firebase 
 
 📜 License 📜 :
 This project is for educational purposes only. All music data and assets are proprety of Spotify and respective rights holdes.
