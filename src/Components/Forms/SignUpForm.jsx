@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { signUpWithEmailAndPassword } from '../../services/login.service'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SignUpForm = () => {
     const [signUpData, setSignUpData] = useState({
@@ -8,7 +8,7 @@ const SignUpForm = () => {
         password: "",
 
     })
-
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -18,6 +18,7 @@ const SignUpForm = () => {
             email: "",
             password: "",
         })
+        navigate("/")
 
     }
     return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import { loginWithEmailAndPassword } from '../../services/login.service'
 const LoginForm = () => {
     const [loginData, setLoginData] = useState({
@@ -7,11 +7,22 @@ const LoginForm = () => {
         password: "",
 
     })
-
-    const handleSubmit = (e) => {
+    const [error, setError]=useState("")
+    const navigate= useNavigate()
+ 
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        loginWithEmailAndPassword(loginData.email, loginData.password)
-        setLoginData({ email: "", password: "" })
+        setError("")
+        try{
+            await loginWithEmailAndPassword(loginData.email, loginData.password)
+            setLoginData({ email: "", password: "" })
+            setTimeout(() => {
+                navigate("/home")
+            }, 100); 
+        }catch(err){
+            setError("Incorrect email or password")
+        }
+        
     }
 
     return (
@@ -20,9 +31,11 @@ const LoginForm = () => {
                 <h1
                     className='font-bold text-5xl text-center font- text-white mb-5'
                 >Login</h1>
+                
                 <form
                     onSubmit={handleSubmit}
                 >
+                    {error && <p className="text-red-500 text-center mb-4">"Incorrect email or password"</p>}
                     <div
                         className='grid grid-rows-2 mx-9 my-5 lg:mx-[100px] transition-all duration-200'
                     >

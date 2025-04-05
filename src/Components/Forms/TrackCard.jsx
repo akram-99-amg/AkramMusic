@@ -3,40 +3,43 @@ import { Waveform } from 'ldrs/react'
 import 'ldrs/react/Waveform.css'
 import { useMusic } from '../Store/Music'
 
+
 const TrackCard = () => {
+  
   const {handleTrackPlay}= useMusic()
-  const [artists, setArtists] = useState("")
-  const [accessToken, setAccessToken] = useState("")
+  // const [artists, setArtists] = useState("")
+  // const [accessToken, setAccessToken] = useState("")
+  const [query, setQuery] =useState("")
   const [tracks, setTracks] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
   
-  const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID
-  const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET
+  // const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID
+  // const CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET
 
-  useEffect(() => {
-    // Spotify Token
-    const fetchToken = async () => {
-      try {
-        const authParameter = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: "grant_type=client_credentials&client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET
-        }
-        fetch("https://accounts.spotify.com/api/token", authParameter)
-          .then(res => res.json())
-          .then(data => setAccessToken(data.access_token))
-      } catch (err) {
-        setError("failed to get access token")
-      }
+  // useEffect(() => {
+  //   // Spotify Token
+  //   const fetchToken = async () => {
+  //     try {
+  //       const authParameter = {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/x-www-form-urlencoded"
+  //         },
+  //         body: "grant_type=client_credentials&client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET
+  //       }
+  //       fetch("https://accounts.spotify.com/api/token", authParameter)
+  //         .then(res => res.json())
+  //         .then(data => setAccessToken(data.access_token))
+  //     } catch (err) {
+  //       setError("failed to get access token")
+  //     }
 
-    }
+  //   }
 
-    fetchToken()
-  }, [])
+  //   fetchToken()
+  // }, [])
 
   
 //search for the artist
@@ -45,38 +48,63 @@ const TrackCard = () => {
     setIsLoading(true)
     setError(null)
 
-    try {
-      const searchParameter = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`
-        }
 
-      }
-      //get the artists
-      const artistID = await fetch("https://api.spotify.com/v1/search?q=" + artists + "&type=artist", searchParameter);
-      const artistData = await artistID.json()
-      if (!artistData.artists?.items?.length) {
-        throw new Error("Artist not found ")
-      }
-
-      const artistItem = artistData.artists.items[0].id
-
-      //get the tracks
-      const returntracks = await fetch("https://api.spotify.com/v1/artists/" + artistItem + "/top-tracks?market=US&limit=20", searchParameter);
-      const tracksData = await returntracks.json()
-      if (!tracksData.tracks) {
-        throw new Error("No tracks Found")
-      }
-      setTracks(tracksData.tracks)
-
-    } catch (err) {
-      setError(err.message || " Failed to fetch")
+    const proxyUrls = [
+      "https://api.allorigins.win/get?url=",
+      "https://corsproxy.io/?",
+      "https://thingproxy.freeboard.io/fetch/"
+    ];
+    try{
+      const encodedUrl = encodeURIComponent(`https://api.deezer.com/search?q=${query}`);
+      const response = await fetch(`${proxyUrls[0]}${encodedUrl}`);
+      const data = await response.json();
+      const result = data.contents ? JSON.parse(data.contents) : data;
+      setTracks(result.data || []);
+      // const proxyUrl = "https://cors-anywhere.herokuapp.com/"
+      // const apiUrl = `https://api.deezer.com/search?q=${encodeURIComponent(query)}`
+      // const response = await fetch(`https://api.deezer.com/search/track?q=${query}`,{
+        // method:"GET",
+        // mode:"no-cors"})
+      
+      // const response =await fetch(proxyUrl+apiUrl)
+      // const data= await response.json()
+      // const data=await  response.json()
+      setTracks(data.data || [])
+      // const jsonString = text.match(/\((.*)\)/)?.[1] || "{}"
+      // const data =JSON.parse(jsonString)
+      // setTracks(data.data || [])
+    }catch(err){
+      setError("Error no song found")
       setTracks([])
-    } finally {
+    }finally{
       setIsLoading(false)
     }
+
+    // try {
+    //   const searchParameter = {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${accessToken}`
+    //     }
+
+    //   }
+
+    //   //get the tracks
+    //   const returntracks = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(artists)}&type=track&limit=20`, searchParameter);
+    //   const tracksData = await returntracks.json()
+      
+    //   setTracks(tracksData.tracks.items)
+
+      
+
+
+    // } catch (err) {
+    //   setError(err.message || " Failed to fetch")
+    //   setTracks([])
+    // } finally {
+    //   setIsLoading(false)
+    // }
 
   }
 
@@ -91,7 +119,7 @@ const TrackCard = () => {
           name="search"
           placeholder='Search for an artist ?'
           className='rounded-2xl  py-2 px-3 w-48 sm:w-[450px] hover:shadow-md hover:bg-gray-100 focus:outline-offset-2 focus:outline-gray-200'
-          onChange={(e) => setArtists(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
 
         />
         <button
@@ -117,16 +145,22 @@ const TrackCard = () => {
         {tracks.map((track) => (
           <div key={track.id}
             className="flex items-center gap-4 p-2 border-b cursor-pointer hover:bg-gray-100" 
-              onClick={() =>handleTrackPlay(track)}
+              onClick={() =>handleTrackPlay({
+                
+                name:track.title,
+                preview_url:track.preview,
+                
+
+              })}
             >
-            <img src={track.album.images[0].url || 'https://via.placeholder.com/50'}
-              alt={track.name}
+            <img src={track.album.cover_medium}
+              alt={track.title}
               className="w-16 h-16 rounded-full" />
 
             <div>
-              <h2 >{track.name}</h2>
+              <h2 >{track.title}</h2>
               <h2>
-                {track.artists.map(a => a.name).join(", ")}
+                {track.artist.name}
               </h2>
             </div>
             

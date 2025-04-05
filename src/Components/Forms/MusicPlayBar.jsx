@@ -10,7 +10,15 @@ const formatTime = (seconds) => {
   return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 };
 const MusicPlayBar = () => {
-  const { currentTrack, isPlaying, progress, duration, volume, handlePause, handleSeek, handleVolumeChange } = useMusic();
+  const { currentTrack, 
+    isPlaying, 
+    progress, 
+    duration, 
+    volume, 
+    handlePause, 
+    handleSeek, 
+    handleVolumeChange,
+    } = useMusic();
 
 
   return (
@@ -23,13 +31,13 @@ const MusicPlayBar = () => {
           {currentTrack && (
             <div className='flex items-center gap-4 py-4 sm:py-0 ' >
               <img
-                src={currentTrack.album.images[0]?.url || 'https://via.placeholder.com/50'}
-                alt={currentTrack.name}
+                src={currentTrack.album.cover_medium}
+                alt={currentTrack.title}
                 className='w-12 sm:w-16 sm:h-16 rounded-md object-cover' />
               <div className='truncate'>
-                <h2 className='text-md sm:text-lg font-semibold'>{currentTrack.name}</h2>
+                <h2 className='text-md sm:text-lg font-semibold'>{currentTrack.title}</h2>
                 <p className="text-gray-700 truncate">
-                  {currentTrack.artists.map(a => a.name).join(", ")}
+                  {currentTrack.artists.name}
                 </p>
               </div>
 
@@ -37,6 +45,7 @@ const MusicPlayBar = () => {
 
           )}
 
+          
 
           {/* Control */}
           <div className='flex flex-col items-center justify-center flex-1'>
@@ -96,6 +105,13 @@ const MusicPlayBar = () => {
 
 
           </div>
+          {currentTrack && (
+            <audio 
+            ref={audioRef}
+            src={currentTrack.preview_url}
+            preload='auto'
+            />
+          )}
         </div>
 
 
