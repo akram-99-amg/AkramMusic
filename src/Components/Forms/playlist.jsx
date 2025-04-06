@@ -40,11 +40,11 @@ const Playlist = () => {
 
               
                 <button
-                className='  sm:ml-[100px] text-2xl'
+                className=' pl-6 sm:pl-10 text-2xl'
                   onClick={() => removePlaylist(track.id)}
                 >
                   <FontAwesomeIcon
-                   className='" text-purple-600 hover:text-red-500'
+                   className='  text-purple-600 hover:text-red-500'
                   icon={faTrash} />
                 </button>
               
