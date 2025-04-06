@@ -21,7 +21,9 @@ Styling : Tailwind CSS
 
 📚 Libraries Used 📚
 
-state management : Zustand
+Audio : Howler.js
+
+State management : Zustand
 
 Data Fetching: React-query
 
