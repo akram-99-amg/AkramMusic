@@ -3,6 +3,8 @@ This project is a music web application built with React js. the app allows user
 
 📝 Features 📝 
 
+Login and sign up : To access the app, you must create an account and the login 
+
 Music Search : Search for tracks by title, artist, or album name
 
 Track Display: View Trackinformation including title, artist, album cover and album name
@@ -31,7 +33,7 @@ Routing : React-Router-Dom
 
 📨 API used 📨
 
-API : Spotify API and Deezer API
+API : ♫ Spotify API and Deezer API ♫
 
 🪪 Client authentication 🪪  
 
