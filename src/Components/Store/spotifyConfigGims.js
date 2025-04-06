@@ -37,7 +37,7 @@ const useSpotifyStoreGims = create((set) => ({
         }
 
     },
-    // fetching bruno mars songs
+    // fetching gims songs
     GimsFetch: async () => {
         try {
             set({ isLoading: true });

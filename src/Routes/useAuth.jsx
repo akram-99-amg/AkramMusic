@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { auth } from '../Config/firebase'
-// import { setPersistence, browserSessionPersistence } from 'firebase/auth'
+
 
 const useAuth = () => {
     const [user, setUser] = useState(null)

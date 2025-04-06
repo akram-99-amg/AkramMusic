@@ -36,7 +36,7 @@ const useSpotifyStoreWeek =create((set)=>({
         }
 
     },
-    // fetching the weekend songs
+    // fetching the weeknd songs
     WeekndFetch: async () => {
         try {
             set({ isLoading: true });

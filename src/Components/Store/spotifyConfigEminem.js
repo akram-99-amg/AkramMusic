@@ -36,7 +36,7 @@ const useSpotifyStoreEminem =create((set)=>({
         }
 
     },
-    // fetching the weekend songs
+    // fetching eminem songs
     EminemFetch: async () => {
         try {
             set({ isLoading: true });
