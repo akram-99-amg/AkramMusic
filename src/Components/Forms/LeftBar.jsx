@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
+import Playlist from './playlist';
 
 const LeftBar = () => {
   return (
@@ -29,12 +30,19 @@ const LeftBar = () => {
         </Link>
 
         <Link
+        to="/playlist"
           className='sm:font-semibold font-normal texl-lg sm:text-xl flex flex-col sm:flex-row sm:gap-4  items-center gap-1 bg-gray-300 mx-6 p-2 rounded-md hover:bg-gray-200 hover:text-purple-600'
         >
           <FontAwesomeIcon icon={faMusic} />
           <span>Playlist</span> 
           
           </Link>
+          <div className=" hidden md:block overflow-y-auto max-h-[400px]  mt-4">
+          <Playlist  />
+          
+          
+          </div>
+          
       </div>
 
 

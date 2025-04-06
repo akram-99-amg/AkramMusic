@@ -3,6 +3,7 @@ import MusicPlayBar from '../Components/Forms/MusicPlayBar'
 import HomeSection from './HomeSection'
 import LeftBar from '../Components/Forms/LeftBar'
 import TrackCard from "../Components/Forms/TrackCard"
+import Playlist from "../Components/Forms/playlist"
 
 
 
@@ -17,6 +18,7 @@ const MainPage = () => {
         <Routes>
         <Route path="/home" element={<HomeSection />} />
         <Route path="/search" element={<TrackCard />} />
+        <Route path="/playlist" element={<Playlist />} />
         <Route index element={<Navigate to="/home" replace />} />
         </Routes>
 

@@ -23,8 +23,8 @@ const MusicPlayBar = () => {
 
   return (
     <div className='fixed bottom-0 left-0 right-0  sm:flex sm:justify-center  transition-width duration-200'>
-      <div className='  rounded-md lg:w-3/4  h-24 shadow-lg w-screen bg-gradient-to-t from-purple-300 to-violet-200'>
-        <div className='grid grid-cols-3 sm:grid-cols-3 sm:gap-6 gap-4 p-1 sm:p-4'>
+      <div className='  rounded-md border-spacing-4 lg:w-3/4  h-24 shadow-lg w-screen bg-gradient-to-t from-purple-200 to-violet-300'>
+        <div className='grid grid-cols-3 sm:justify-center sm:flex sm:gap-6 gap-4 p-1 sm:p-4'>
 
           {/* current track */}
 

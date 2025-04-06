@@ -4,9 +4,9 @@ import useAuth from './useAuth'
 const ProtectedRoute = ({children}) => {
     const { user, isLoading } = useAuth()
     const location = useLocation()
-    console.log("ProtectedRoute check → user:", user);
+    
     if(isLoading){
-        return <p>Loading auth ...</p>
+        return <p className='flex justify-center content-center'>Loading auth ...</p>
     }
 
     if (!user) {
