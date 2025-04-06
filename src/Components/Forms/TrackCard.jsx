@@ -97,7 +97,7 @@ const TrackCard = () => {
         onSubmit={search}>
         <input type="text"
           name="search"
-          placeholder='Search for an artist ?'
+          placeholder='What do you want to listen to?'
           className='rounded-2xl  py-2 px-3 w-48 sm:w-[450px] hover:shadow-md hover:bg-gray-100 focus:outline-offset-2 focus:outline-gray-200'
           onChange={(e) => setQuery(e.target.value)}
 
